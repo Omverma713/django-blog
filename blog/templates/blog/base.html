@@ -1,0 +1,365 @@
+{% load blog_tags %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    {% block title %}My Professional Blog{% endblock %}
+  </title>
+
+  <style>
+
+  /* ===== Google Font ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+  *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+  }
+
+  /* ===== Body ===== */
+  body{
+      background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
+      color:white;
+      min-height:100vh;
+      overflow-x:hidden;
+  }
+
+  /* ===== Header ===== */
+  header{
+      text-align:center;
+      padding:50px 20px;
+      background:rgba(255,255,255,0.06);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,0.1);
+      animation:fadeDown 1s ease;
+  }
+
+  header h1{
+      font-size:3rem;
+      margin-bottom:12px;
+  }
+
+  header p{
+      color:#cbd5e1;
+      font-size:17px;
+  }
+
+  /* ===== Main Layout ===== */
+  .container{
+      width:95%;
+      max-width:1400px;
+      margin:40px auto;
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:30px;
+  }
+
+  /* ===== Main ===== */
+  main{
+      display:flex;
+      flex-direction:column;
+      gap:30px;
+  }
+
+  /* ===== Sidebar ===== */
+  #sidebar,
+  aside{
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(12px);
+      padding:28px;
+      border-radius:24px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.3);
+      animation:fadeUp 1s ease;
+      transition:0.4s ease;
+  }
+
+  #sidebar:hover,
+  aside:hover{
+      transform:translateY(-5px);
+      background:rgba(255,255,255,0.12);
+  }
+
+  /* ===== Headings ===== */
+  h2{
+      font-size:2rem;
+      margin-bottom:18px;
+  }
+
+  h3{
+      margin:25px 0 15px;
+      color:#00d4ff;
+  }
+
+  /* ===== Paragraph ===== */
+  p{
+      line-height:1.8;
+      color:#e2e8f0;
+  }
+
+  /* ===== Links ===== */
+  a{
+      text-decoration:none;
+      color:#00c6ff;
+      transition:0.3s ease;
+  }
+
+  a:hover{
+      color:white;
+      text-shadow:0 0 10px #00c6ff;
+  }
+
+  /* ===== Lists ===== */
+  ul{
+      list-style:none;
+      margin-top:10px;
+  }
+
+  ul li{
+      background:rgba(255,255,255,0.06);
+      padding:14px;
+      border-radius:14px;
+      margin-bottom:14px;
+      transition:0.3s ease;
+      animation:fadeIn 0.7s ease;
+  }
+
+  ul li:hover{
+      transform:translateX(8px);
+      background:rgba(255,255,255,0.12);
+  }
+
+  /* ===== Footer ===== */
+  footer{
+      margin-top:50px;
+      text-align:center;
+      padding:25px;
+      background:rgba(255,255,255,0.05);
+      border-top:1px solid rgba(255,255,255,0.1);
+  }
+
+  footer p{
+      color:#cbd5e1;
+      font-size:15px;
+  }
+
+  /* ===== Scrollbar ===== */
+  ::-webkit-scrollbar{
+      width:10px;
+  }
+
+  ::-webkit-scrollbar-track{
+      background:#1e293b;
+  }
+
+  ::-webkit-scrollbar-thumb{
+      background:#00c6ff;
+      border-radius:10px;
+  }
+
+  /* ===== Animations ===== */
+  @keyframes fadeDown{
+      from{
+          opacity:0;
+          transform:translateY(-30px);
+      }
+      to{
+          opacity:1;
+          transform:translateY(0);
+      }
+  }
+
+  @keyframes fadeUp{
+      from{
+          opacity:0;
+          transform:translateY(30px);
+      }
+      to{
+          opacity:1;
+          transform:translateY(0);
+      }
+  }
+
+  @keyframes fadeIn{
+      from{
+          opacity:0;
+          transform:translateY(15px);
+      }
+      to{
+          opacity:1;
+          transform:translateY(0);
+      }
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width:992px){
+
+      .container{
+          grid-template-columns:1fr;
+      }
+
+      aside{
+          order:-1;
+      }
+  }
+
+  @media (max-width:768px){
+
+      header h1{
+          font-size:2.3rem;
+      }
+
+      h2{
+          font-size:1.6rem;
+      }
+
+      #sidebar,
+      aside{
+          padding:22px;
+      }
+  }
+
+  @media (max-width:480px){
+
+      body{
+          font-size:14px;
+      }
+
+      header{
+          padding:35px 15px;
+      }
+
+      header h1{
+          font-size:1.8rem;
+      }
+
+      .container{
+          width:92%;
+          gap:20px;
+      }
+
+      #sidebar,
+      aside{
+          padding:18px;
+          border-radius:18px;
+      }
+
+      ul li{
+          padding:12px;
+      }
+  }
+
+  </style>
+
+</head>
+
+<body>
+
+<header>
+
+  <h1>My Professional Blog</h1>
+
+  <p>
+    Quality content, beautifully presented
+  </p>
+
+</header>
+
+<div class="container">
+
+  <main>
+
+    {% block content %}
+    {% endblock %}
+
+    <div id="sidebar">
+
+      <h2>My Blog</h2>
+
+      <p>
+        This is my blog.
+        I've written {% total_posts %} posts so far.
+      </p>
+
+      <p>
+        <a href="{% url "blog:post_feed" %}">
+          Subscribe to my RSS feed
+        </a>
+      </p>
+
+      <h3>Latest posts</h3>
+
+      {% show_latest_posts 3 %}
+
+      <h3>Most commented posts</h3>
+
+      {% get_most_commented_posts as most_commented_posts %}
+
+      <ul>
+
+        {% for post in most_commented_posts %}
+
+        <li>
+          <a href="{{ post.get_absolute_url }}">
+            {{ post.title }}
+          </a>
+        </li>
+
+        {% endfor %}
+
+      </ul>
+
+    </div>
+
+  </main>
+
+  <aside>
+
+    <h2>About</h2>
+
+    <p>
+      Welcome to my professional blog built with Django.
+      View posts, read articles, and stay updated.
+    </p>
+
+    <h3>Recent Posts</h3>
+
+    <ul>
+      {% for post in posts|slice:":2" %}
+
+      <li>
+        <a href="{{ post.get_absolute_url }}">
+          {{ post.title }}
+          
+        </a>
+      </li>
+
+       {% endfor %}
+
+    </ul>
+
+  </aside>
+
+</div>
+
+<footer>
+
+  <p>
+    &copy; 2026 My Blog. Built with Django.
+  </p>
+
+</footer>
+
+</body>
+</html>

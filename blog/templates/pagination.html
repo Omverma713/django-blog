@@ -1,0 +1,113 @@
+<style>
+
+/* ===== Pagination Container ===== */
+.pagination{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin:50px auto 20px;
+    flex-wrap:wrap;
+    animation:fadeInUp 0.8s ease;
+}
+
+/* ===== Pagination Buttons ===== */
+.pagination a{
+    padding:12px 22px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    color:white;
+    text-decoration:none;
+    font-weight:500;
+    transition:0.4s ease;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+/* Hover Effect */
+.pagination a:hover{
+    background:linear-gradient(45deg,#00c6ff,#0072ff);
+    transform:translateY(-4px);
+    box-shadow:0 6px 20px rgba(0,114,255,0.5);
+}
+
+/* ===== Current Page ===== */
+.pagination .current{
+    padding:12px 20px;
+    border-radius:14px;
+    background:linear-gradient(45deg,#00c6ff,#0072ff);
+    color:white;
+    font-weight:600;
+    box-shadow:0 4px 15px rgba(0,114,255,0.4);
+}
+
+/* ===== Animation ===== */
+@keyframes fadeInUp{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ===== Responsive ===== */
+@media (max-width:768px){
+
+    .pagination{
+        gap:10px;
+    }
+
+    .pagination a,
+    .pagination .current{
+        padding:10px 16px;
+        font-size:14px;
+    }
+}
+
+@media (max-width:480px){
+
+    .pagination{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .pagination a,
+    .pagination .current{
+        width:100%;
+        text-align:center;
+    }
+}
+
+</style>
+
+<div class="pagination">
+
+  {% if page.has_other_pages %}
+
+    {% if page.has_previous %}
+
+      <a href="?page={{ page.previous_page_number }}">
+        ← Previous
+      </a>
+
+    {% endif %}
+
+    <span class="current">
+      Page {{ page.number }} of {{ page.paginator.num_pages }}
+    </span>
+
+    {% if page.has_next %}
+
+      <a href="?page={{ page.next_page_number }}">
+        Next →
+      </a>
+
+    {% endif %}
+
+  {% endif %}
+
+</div>
