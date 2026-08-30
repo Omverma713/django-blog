@@ -48,12 +48,12 @@
       </div>
 
       <div class="post-footer">
-        <div class="post-author-info">
+        <a href="{{ post.get_absolute_url }}" class="post-author-info" style="text-decoration: none;">
           <div class="author-avatar">
             {{ post.author.username|first|upper }}
           </div>
           <span class="author-name">{{ post.author.get_full_name|default:post.author.username }}</span>
-        </div>
+        </a>
         <a href="{{ post.get_absolute_url }}" class="read-more-btn">
           <span>Read Article</span>
           <i class="fa-solid fa-arrow-right"></i>

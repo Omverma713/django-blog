@@ -71,10 +71,10 @@
 
   <!-- Hero Header -->
   <section class="hero-header">
-    <div class="hero-tag">
+    <a href="{% url 'blog:post_list' %}" class="hero-tag" style="text-decoration: none;">
       <i class="fa-solid fa-sparkles"></i>
       <span>Thought Leadership & Tech Chronicles</span>
-    </div>
+    </a>
     <h1>Explore Modern Insights & Ideas</h1>
     <p>Discover in-depth perspectives on software engineering, product design, and modern technology.</p>
   </section>
@@ -97,15 +97,17 @@
           <i class="fa-solid fa-chart-simple"></i>
           <span>Blog Overview</span>
         </h3>
-        <div class="stats-box">
-          <div>
-            <div class="stat-number">{% total_posts %}</div>
-            <div class="stat-label">Published Articles</div>
+        <a href="{% url 'blog:post_list' %}" style="display: block; text-decoration: none;">
+          <div class="stats-box" style="transition: var(--transition-normal); cursor: pointer;">
+            <div>
+              <div class="stat-number">{% total_posts %}</div>
+              <div class="stat-label">Published Articles <i class="fa-solid fa-arrow-right" style="font-size: 11px; margin-left: 4px; color: var(--accent-cyan);"></i></div>
+            </div>
+            <div class="brand-icon" style="width: 42px; height: 42px; font-size: 20px;">
+              <i class="fa-solid fa-newspaper"></i>
+            </div>
           </div>
-          <div class="brand-icon" style="width: 42px; height: 42px; font-size: 20px;">
-            <i class="fa-solid fa-newspaper"></i>
-          </div>
-        </div>
+        </a>
         <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
           Curated stories, programming tutorials, and technical insights published regularly.
         </p>
