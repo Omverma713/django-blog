@@ -8,10 +8,28 @@
   <meta name="description" content="A modern, high-performance blog platform built with Django.">
   <meta name="theme-color" content="#070b14">
 
-  <!-- Favicon -->
+  <!-- Favicon & Icons -->
   <link rel="icon" type="image/svg+xml" href="{% static "img/favicon.svg" %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static "img/favicon-32x32.png" %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static "img/apple-touch-icon.png" %}">
 
   <title>{% block title %}Chronicle | Modern Insights & Tech Stories{% endblock %}</title>
+
+  <!-- Open Graph / Telegram / WhatsApp / Facebook Preview Meta Tags -->
+  <meta property="og:site_name" content="Chronicle">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <meta property="og:title" content="{% block og_title %}Chronicle | Modern Insights & Tech Stories{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}A modern, high-performance blog platform built with Django.{% endblock %}">
+  <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/og-cover.png' %}{% endblock %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter / Discord Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}Chronicle | Modern Insights & Tech Stories{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}A modern, high-performance blog platform built with Django.{% endblock %}">
+  <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/og-cover.png' %}{% endblock %}">
 
   <!-- Google Fonts & Font Awesome 6 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

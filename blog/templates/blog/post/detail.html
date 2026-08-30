@@ -5,6 +5,12 @@
   {{ post.title }} | Chronicle
 {% endblock %}
 
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }} | Chronicle{% endblock %}
+{% block og_description %}{{ post.body|markdown|striptags|truncatewords:28 }}{% endblock %}
+{% block twitter_title %}{{ post.title }} | Chronicle{% endblock %}
+{% block twitter_description %}{{ post.body|markdown|striptags|truncatewords:28 }}{% endblock %}
+
 {% block content %}
 
 <div class="article-detail-container">
