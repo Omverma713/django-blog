@@ -101,10 +101,11 @@ def post_share(request, post_id):
             )
 
             try:
+                from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'omverma.dev@gmail.com')
                 send_mail(
                     subject=subject,
                     message=message,
-                    from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST_USER),
+                    from_email=from_email,
                     recipient_list=[cd['to']],
                     fail_silently=False,
                 )
