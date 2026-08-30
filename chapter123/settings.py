@@ -122,5 +122,5 @@ EMAIL_BACKEND = config('EMAIL_BACKEND', default='anymail.backends.brevo.EmailBac
 ANYMAIL = {
     "BREVO_API_KEY": config('BREVO_API_KEY', default=''),
 }
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='omv7130@gmail.com')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='omverma.dev@gmail.com')
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
