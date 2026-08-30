@@ -149,3 +149,24 @@ def post_comment(request, post_id):
             'comment': comment
         }
     )
+
+def health_check(request):
+    from django.http import JsonResponse
+    from django.db import connection
+    from django.utils import timezone
+
+    try:
+        connection.ensure_connection()
+        db_status = "connected"
+        status_code = 200
+        status_text = "healthy"
+    except Exception as e:
+        db_status = f"error: {str(e)}"
+        status_code = 503
+        status_text = "unhealthy"
+
+    return JsonResponse({
+        "status": status_text,
+        "database": db_status,
+        "timestamp": timezone.now().isoformat(),
+    }, status=status_code)

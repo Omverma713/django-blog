@@ -26,14 +26,12 @@ sitemaps = {'posts': PostSitemap,
 }
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('blog/',include('blog.urls',namespace='blog')),
+    path('health/', views.health_check, name='health_check'),
+    path('healthz/', views.health_check, name='healthz'),
+    path('blog/', include('blog.urls', namespace='blog')),
     path('', lambda request: HttpResponseRedirect('/blog/')),
-     path('sitemap.xml',
+    path('sitemap.xml',
         sitemap,
-        {'sitemaps': sitemaps},name='django.contrib.sitemaps.views.sitemap'
-
-    )
+        {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'
+    ),
 ]
-        
-
-
