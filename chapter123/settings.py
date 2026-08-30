@@ -19,6 +19,11 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'https://django-blog-6s3p.onrender.com',
+]
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -119,3 +124,4 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='omv7130@gmail.com')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='gxbbkvmsibneazhf')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='omv7130@gmail.com')
+EMAIL_TIMEOUT = config('EMAIL_TIMEOUT', default=5, cast=int)
