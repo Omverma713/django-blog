@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'taggit',
+    'anymail',
 ]
 
 SITE_ID = 1
@@ -116,12 +117,10 @@ STORAGES = {
     },
 }
 
-# Email settings
-EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='omv7130@gmail.com')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='gxbbkvmsibneazhf')
+# Email settings (Brevo HTTPS API - bypasses Render port blocks)
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='anymail.backends.brevo.EmailBackend')
+ANYMAIL = {
+    "BREVO_API_KEY": config('BREVO_API_KEY', default=''),
+}
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='omv7130@gmail.com')
-EMAIL_TIMEOUT = config('EMAIL_TIMEOUT', default=5, cast=int)
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
