@@ -1265,12 +1265,24 @@ a:hover {
 
 .footer-link {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .footer-link:hover {
-  color: var(--text-main);
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--border-highlight);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
 }
 
 /* ===== Keyframe Animations ===== */
