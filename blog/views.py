@@ -1,5 +1,4 @@
 from django.conf import settings
-print("EMAIL BACKEND:", settings.EMAIL_BACKEND)
 
 # Create your views here.
 from django.shortcuts import get_object_or_404, render
@@ -79,6 +78,7 @@ def post_share(request, post_id):
     )
 
     sent = False  
+    error_message = None
 
     if request.method == 'POST':
         form = EmailPostForm(request.POST)
@@ -100,14 +100,19 @@ def post_share(request, post_id):
                 f"{cd['name']}'s comments: {cd['comments']}"
             )
 
-            send_mail(
-                subject=subject,
-                message=message,
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[cd['to']],
-            )
-
-            sent = True
+            try:
+                send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST_USER),
+                    recipient_list=[cd['to']],
+                    fail_silently=False,
+                )
+                sent = True
+            except Exception as e:
+                import logging
+                logging.getLogger(__name__).error(f"Failed to send email: {e}")
+                error_message = f"Failed to send email: {str(e)}"
 
     else:
         form = EmailPostForm()
@@ -118,7 +123,8 @@ def post_share(request, post_id):
         {
             'post': post,
             'form': form,
-            'sent': sent
+            'sent': sent,
+            'error_message': error_message,
         }
     )
 

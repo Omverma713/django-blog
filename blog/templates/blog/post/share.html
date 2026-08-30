@@ -42,6 +42,13 @@
       <form method="post" novalidate>
         {% csrf_token %}
 
+        {% if error_message %}
+          <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 20px; color: #fca5a5; font-size: 0.9rem;">
+            <i class="fa-solid fa-circle-exclamation" style="margin-right: 6px;"></i>
+            <strong>Email sending failed:</strong> {{ error_message }}
+          </div>
+        {% endif %}
+
         {% if form.errors %}
           <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 20px; color: #fca5a5; font-size: 0.9rem;">
             <i class="fa-solid fa-triangle-exclamation" style="margin-right: 6px;"></i>
