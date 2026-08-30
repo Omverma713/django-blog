@@ -1,195 +1,62 @@
-<style>
+<div class="form-card" style="margin-top: 10px;">
+  <div class="form-header" style="text-align: left; margin-bottom: 24px;">
+    <h3 style="font-size: 1.4rem; display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+      <i class="fa-solid fa-pen-nib" style="color: var(--accent-cyan);"></i>
+      <span>Leave a Comment</span>
+    </h3>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">
+      Your email address will not be published. Required fields are marked *
+    </p>
+  </div>
 
-/* ===== Google Font ===== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+  <form action="{% url 'blog:post_comment' post.id %}" method="post" novalidate>
+    {% csrf_token %}
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+    {% if form.errors %}
+      <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 20px; color: #fca5a5; font-size: 0.9rem;">
+        <i class="fa-solid fa-circle-exclamation" style="margin-right: 6px;"></i>
+        Please verify the input fields and submit again.
+      </div>
+    {% endif %}
 
-/* ===== Comment Section ===== */
-.comment-container{
-    max-width:700px;
-    margin:40px auto;
-    padding:35px;
-    border-radius:24px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
-    box-shadow:0 8px 30px rgba(0,0,0,0.3);
-    animation:fadeInUp 0.8s ease;
-    transition:0.4s ease;
-}
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px;">
+      <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">
+          <i class="fa-regular fa-user" style="margin-right: 6px; color: var(--accent-cyan);"></i>
+          Your Name *
+        </label>
+        {{ form.name }}
+        {% if form.name.errors %}
+          <span style="color: #f87171; font-size: 0.8rem; margin-top: 4px; display: block;">{{ form.name.errors.0 }}</span>
+        {% endif %}
+      </div>
 
-.comment-container:hover{
-    transform:translateY(-5px);
-    box-shadow:0 12px 35px rgba(0,0,0,0.4);
-}
+      <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">
+          <i class="fa-regular fa-envelope" style="margin-right: 6px; color: var(--accent-cyan);"></i>
+          Your Email *
+        </label>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <span style="color: #f87171; font-size: 0.8rem; margin-top: 4px; display: block;">{{ form.email.errors.0 }}</span>
+        {% endif %}
+      </div>
+    </div>
 
-/* ===== Heading ===== */
-.comment-container h2{
-    text-align:center;
-    margin-bottom:25px;
-    font-size:2rem;
-    color:white;
-    animation:slideDown 1s ease;
-}
+    <div class="form-group">
+      <label for="{{ form.body.id_for_label }}">
+        <i class="fa-regular fa-comment-dots" style="margin-right: 6px; color: var(--accent-primary);"></i>
+        Your Comment *
+      </label>
+      {{ form.body }}
+      {% if form.body.errors %}
+        <span style="color: #f87171; font-size: 0.8rem; margin-top: 4px; display: block;">{{ form.body.errors.0 }}</span>
+      {% endif %}
+    </div>
 
-/* ===== Form Labels ===== */
-.comment-container label{
-    display:block;
-    margin-bottom:8px;
-    color:#ffffff;
-    font-weight:500;
-}
-
-/* ===== Inputs ===== */
-.comment-container input[type="text"],
-.comment-container input[type="email"],
-.comment-container textarea{
-    width:100%;
-    padding:14px;
-    margin-bottom:20px;
-    border:none;
-    outline:none;
-    border-radius:14px;
-    background:rgba(255,255,255,0.12);
-    color:white;
-    font-size:15px;
-    transition:0.3s ease;
-}
-
-/* ===== Textarea ===== */
-.comment-container textarea{
-    min-height:140px;
-    resize:none;
-}
-
-/* ===== Placeholder ===== */
-.comment-container input::placeholder,
-.comment-container textarea::placeholder{
-    color:#d1d5db;
-}
-
-/* ===== Focus Effect ===== */
-.comment-container input:focus,
-.comment-container textarea:focus{
-    background:rgba(255,255,255,0.18);
-    box-shadow:0 0 12px #00c6ff;
-    transform:scale(1.01);
-}
-
-/* ===== Submit Button ===== */
-.comment-container input[type="submit"]{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(45deg,#00c6ff,#0072ff);
-    color:white;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.4s ease;
-}
-
-/* Hover Effect */
-.comment-container input[type="submit"]:hover{
-    transform:translateY(-3px);
-    box-shadow:0 6px 20px rgba(0,114,255,0.5);
-}
-
-/* ===== Animations ===== */
-@keyframes fadeInUp{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes slideDown{
-    from{
-        opacity:0;
-        transform:translateY(-20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* ===== Responsive ===== */
-@media (max-width:768px){
-
-    .comment-container{
-        padding:25px;
-    }
-
-    .comment-container h2{
-        font-size:1.7rem;
-    }
-}
-
-@media (max-width:480px){
-
-    .comment-container{
-        padding:20px;
-        border-radius:18px;
-    }
-
-    .comment-container h2{
-        font-size:1.4rem;
-    }
-
-    .comment-container input[type="submit"]{
-        font-size:15px;
-    }
-}
-
-</style>
-
-<div class="comment-container">
-
-<h2>Add a new comment</h2>
-
-<form action="{% url 'blog:post_comment' post.id %}" method="post">
-
-  {% csrf_token %}
-
-  <p>
-    <label for="{{ form.name.id_for_label }}">
-      Name:
-    </label>
-
-    {{ form.name }}
-  </p>
-
-  <p>
-    <label for="{{ form.email.id_for_label }}">
-      Email:
-    </label>
-
-    {{ form.email }}
-  </p>
-
-  <p>
-    <label for="{{ form.body.id_for_label }}">
-      Comment:
-    </label>
-
-    {{ form.body }}
-  </p>
-
-  <p>
-    <input type="submit" value="Add comment">
-  </p>
-
-</form>
-
+    <button type="submit" class="btn-primary" style="width: auto; padding: 14px 32px;">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span>Post Comment</span>
+    </button>
+  </form>
 </div>

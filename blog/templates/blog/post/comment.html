@@ -1,145 +1,36 @@
 {% extends "blog/base.html" %}
 
 {% block title %}
-Add a comment
+  Comment on "{{ post.title }}" | Chronicle
 {% endblock %}
 
 {% block content %}
 
-<style>
+<div style="max-width: 680px; margin: 0 auto; width: 100%;">
 
-/* ===== Google Font ===== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
-
-/* ===== Main Container ===== */
-.comment-success-container{
-    max-width:700px;
-    margin:60px auto;
-    padding:40px;
-    border-radius:24px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
-    box-shadow:0 8px 30px rgba(0,0,0,0.3);
-    text-align:center;
-    animation:fadeInUp 0.8s ease;
-}
-
-/* ===== Success Heading ===== */
-.comment-success-container h2{
-    font-size:2rem;
-    color:#ffffff;
-    margin-bottom:20px;
-    animation:slideDown 1s ease;
-}
-
-/* ===== Paragraph ===== */
-.comment-success-container p{
-    color:#d1d5db;
-    font-size:16px;
-    line-height:1.8;
-}
-
-/* ===== Button Link ===== */
-.comment-success-container a{
-    display:inline-block;
-    margin-top:20px;
-    padding:14px 24px;
-    border-radius:14px;
-    background:linear-gradient(45deg,#00c6ff,#0072ff);
-    color:white;
-    text-decoration:none;
-    font-weight:600;
-    transition:0.4s ease;
-}
-
-/* Hover Effect */
-.comment-success-container a:hover{
-    transform:translateY(-3px);
-    box-shadow:0 6px 20px rgba(0,114,255,0.5);
-}
-
-/* ===== Animations ===== */
-@keyframes fadeInUp{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes slideDown{
-    from{
-        opacity:0;
-        transform:translateY(-20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* ===== Responsive ===== */
-@media (max-width:768px){
-
-    .comment-success-container{
-        padding:28px;
-    }
-
-    .comment-success-container h2{
-        font-size:1.7rem;
-    }
-}
-
-@media (max-width:480px){
-
-    .comment-success-container{
-        margin:30px 15px;
-        padding:22px;
-        border-radius:18px;
-    }
-
-    .comment-success-container h2{
-        font-size:1.4rem;
-    }
-
-    .comment-success-container a{
-        width:100%;
-    }
-}
-
-</style>
-
-<div class="comment-success-container">
-
-{% if comment %}
-
-<h2>Your comment has been added 🎉</h2>
-
-<p>
-    Thank you for sharing your thoughts.
-</p>
-
-<p>
-    <a href="{{ post.get_absolute_url }}">
-        Back to the post
-    </a>
-</p>
-
-{% else %}
-
-{% include "blog/post/includes/comment_form.html" %}
-
-{% endif %}
+  {% if comment %}
+    <div class="success-card">
+      <div class="success-icon">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h2>Comment Submitted Successfully! 🎉</h2>
+      <p>
+        Thank you for sharing your thoughts on <strong>"{{ post.title }}"</strong>. Your comment is now live.
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ post.get_absolute_url }}" class="btn-primary" style="width: auto; padding: 12px 28px;">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to the Article</span>
+        </a>
+        <a href="{% url 'blog:post_list' %}" class="share-btn" style="background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-subtle);">
+          <i class="fa-solid fa-house"></i>
+          <span>All Articles</span>
+        </a>
+      </div>
+    </div>
+  {% else %}
+    {% include "blog/post/includes/comment_form.html" %}
+  {% endif %}
 
 </div>
 

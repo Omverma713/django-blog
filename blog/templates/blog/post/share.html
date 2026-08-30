@@ -1,248 +1,111 @@
 {% extends "blog/base.html" %}
 
 {% block title %}
-Share a post
+  Share "{{ post.title }}" | Chronicle
 {% endblock %}
 
 {% block content %}
 
-<style>
+<div style="max-width: 680px; margin: 0 auto; width: 100%;">
 
-/* ===== Google Font ===== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+  {% if sent %}
+    <div class="success-card">
+      <div class="success-icon">
+        <i class="fa-solid fa-paper-plane"></i>
+      </div>
+      <h2>Story Shared Successfully! 🎉</h2>
+      <p>
+        <strong>"{{ post.title }}"</strong> was dispatched to <strong>{{ form.cleaned_data.to }}</strong>.
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ post.get_absolute_url }}" class="btn-primary" style="width: auto; padding: 12px 28px;">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Return to Story</span>
+        </a>
+        <a href="{% url 'blog:post_list' %}" class="share-btn" style="background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-subtle);">
+          <i class="fa-solid fa-house"></i>
+          <span>Back to Feed</span>
+        </a>
+      </div>
+    </div>
+  {% else %}
+    <div class="form-card">
+      <div class="form-header">
+        <div class="hero-tag" style="margin-bottom: 12px;">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>Spread Knowledge</span>
+        </div>
+        <h2>Share this Article</h2>
+        <p>Send <strong>"{{ post.title }}"</strong> directly to a friend or colleague's inbox.</p>
+      </div>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+      <form method="post" novalidate>
+        {% csrf_token %}
 
-/* ===== Body ===== */
-body{
-    background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
-    min-height:100vh;
-    color:white;
-    padding:40px 20px;
-}
+        {% if form.errors %}
+          <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 20px; color: #fca5a5; font-size: 0.9rem;">
+            <i class="fa-solid fa-triangle-exclamation" style="margin-right: 6px;"></i>
+            Please correct the errors below and try again.
+          </div>
+        {% endif %}
 
-/* ===== Share Container ===== */
-.share-container{
-    max-width:650px;
-    margin:40px auto;
-    padding:35px;
-    border-radius:24px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
-    box-shadow:0 8px 30px rgba(0,0,0,0.3);
-    animation:fadeInUp 0.8s ease;
-    transition:0.4s ease;
-}
+        <div class="form-group">
+          <label for="{{ form.name.id_for_label }}">
+            <i class="fa-regular fa-user" style="margin-right: 6px; color: var(--accent-cyan);"></i>
+            Your Name
+          </label>
+          {{ form.name }}
+          {% if form.name.errors %}
+            <span style="color: #f87171; font-size: 0.8rem; margin-top: 4px; display: block;">{{ form.name.errors.0 }}</span>
+          {% endif %}
+        </div>
 
-.share-container:hover{
-    transform:translateY(-5px);
-    box-shadow:0 12px 35px rgba(0,0,0,0.4);
-}
+        <div class="form-group">
+          <label for="{{ form.email.id_for_label }}">
+            <i class="fa-regular fa-envelope" style="margin-right: 6px; color: var(--accent-cyan);"></i>
+            Your Email Address
+          </label>
+          {{ form.email }}
+          {% if form.email.errors %}
+            <span style="color: #f87171; font-size: 0.8rem; margin-top: 4px; display: block;">{{ form.email.errors.0 }}</span>
+          {% endif %}
+        </div>
 
-/* ===== Heading ===== */
-.share-container h1{
-    text-align:center;
-    margin-bottom:25px;
-    font-size:2.2rem;
-    animation:slideDown 1s ease;
-}
+        <div class="form-group">
+          <label for="{{ form.to.id_for_label }}">
+            <i class="fa-solid fa-at" style="margin-right: 6px; color: var(--accent-primary);"></i>
+            Recipient's Email Address
+          </label>
+          {{ form.to }}
+          {% if form.to.errors %}
+            <span style="color: #f87171; font-size: 0.8rem; margin-top: 4px; display: block;">{{ form.to.errors.0 }}</span>
+          {% endif %}
+        </div>
 
-/* ===== Labels ===== */
-.share-container label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:500;
-    color:#ffffff;
-}
+        <div class="form-group">
+          <label for="{{ form.comments.id_for_label }}">
+            <i class="fa-regular fa-message" style="margin-right: 6px; color: var(--accent-cyan);"></i>
+            Personal Note (Optional)
+          </label>
+          {{ form.comments }}
+          {% if form.comments.errors %}
+            <span style="color: #f87171; font-size: 0.8rem; margin-top: 4px; display: block;">{{ form.comments.errors.0 }}</span>
+          {% endif %}
+        </div>
 
-/* ===== Inputs ===== */
-.share-container input[type="text"],
-.share-container input[type="email"],
-.share-container textarea{
-    width:100%;
-    padding:14px;
-    margin-bottom:20px;
-    border:none;
-    outline:none;
-    border-radius:14px;
-    background:rgba(255,255,255,0.12);
-    color:white;
-    font-size:15px;
-    transition:0.3s ease;
-}
+        <button type="submit" class="btn-primary" style="margin-top: 10px;">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Send Article Recommendation</span>
+        </button>
 
-/* ===== Placeholder ===== */
-.share-container input::placeholder,
-.share-container textarea::placeholder{
-    color:#d1d5db;
-}
-
-/* ===== Focus Effect ===== */
-.share-container input:focus,
-.share-container textarea:focus{
-    background:rgba(255,255,255,0.18);
-    box-shadow:0 0 12px #00c6ff;
-    transform:scale(1.01);
-}
-
-/* ===== Submit Button ===== */
-.share-container input[type="submit"]{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(45deg,#00c6ff,#0072ff);
-    color:white;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.4s ease;
-}
-
-/* Hover */
-.share-container input[type="submit"]:hover{
-    transform:translateY(-3px);
-    box-shadow:0 6px 20px rgba(0,114,255,0.5);
-}
-
-/* ===== Success Message ===== */
-.success{
-    text-align:center;
-    padding:30px;
-    border-radius:20px;
-    background:rgba(34,197,94,0.15);
-    border:1px solid rgba(34,197,94,0.4);
-    animation:fadeInUp 0.8s ease;
-}
-
-.success h1{
-    color:#4ade80;
-    margin-bottom:15px;
-}
-
-.success p{
-    color:#e2e8f0;
-    line-height:1.8;
-}
-
-/* ===== Animations ===== */
-@keyframes fadeInUp{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes slideDown{
-    from{
-        opacity:0;
-        transform:translateY(-20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* ===== Responsive ===== */
-@media (max-width:768px){
-
-    .share-container{
-        padding:25px;
-    }
-
-    .share-container h1{
-        font-size:1.8rem;
-    }
-}
-
-@media (max-width:480px){
-
-    body{
-        padding:20px 10px;
-    }
-
-    .share-container{
-        padding:20px;
-        border-radius:18px;
-    }
-
-    .share-container h1{
-        font-size:1.5rem;
-    }
-
-    .share-container input[type="submit"]{
-        font-size:15px;
-    }
-}
-
-</style>
-
-<div class="share-container">
-
-{% if sent %}
-
-<div class="success">
-
-  <h1>E-mail successfully sent 🎉</h1>
-
-  <p>
-    "{{ post.title }}" was successfully sent to
-    {{ form.data.name }}.
-  </p>
-
-</div>
-
-{% else %}
-
-<h1>
-  Share "{{ post.title }}" by e-mail
-</h1>
-
-<form method="post">
-
-  {% csrf_token %}
-
-  <p>
-    <label for="{{ form.name.id_for_label }}">
-      Your name:
-    </label>
-
-    {{ form.name }}
-  </p>
-
-  <p>
-    <label for="{{ form.email.id_for_label }}">
-      Your email:
-    </label>
-
-    {{ form.email }}
-  </p>
-
-  <p>
-    <label for="{{ form.to.id_for_label }}">
-      To:
-    </label>
-
-    {{ form.to }}
-  </p>
-
-  <p>
-    <input type="submit" value="Send e-mail">
-  </p>
-
-</form>
-
-{% endif %}
+        <div style="text-align: center; margin-top: 20px;">
+          <a href="{{ post.get_absolute_url }}" style="color: var(--text-muted); font-size: 0.9rem;">
+            ← Cancel and back to story
+          </a>
+        </div>
+      </form>
+    </div>
+  {% endif %}
 
 </div>
 
